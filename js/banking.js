@@ -1,18 +1,18 @@
-function getInputValue(){
-    const depositInputField = document.getElementById('deposit-input');
-    const depositInputValueText = depositInputField.value;
-    const depositInputValue = parseFloat(depositInputValueText);
+function getInputValue(inputId){
+    const InputField = document.getElementById(inputId);
+    const InputValueText = InputField.value;
+    const InputValue = parseFloat(InputValueText);
 
     // clear the deposit field
-    depositInputField.value = '';
+    InputField.value = '';
 
-    return depositInputValue;
+    return InputValue;
 }
 
 
 
 document.getElementById('deposit-btn').addEventListener('click', function(){
-    const depositInputValue = getInputValue();
+    const depositInputValue = getInputValue('deposit-input');
 
     // get prevoius deposit total
     const totalDepositField = document.getElementById('deposit-total');
