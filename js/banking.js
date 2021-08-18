@@ -9,16 +9,24 @@ function getInputValue(inputId){
     return InputValue;
 }
 
-function updateTotalField(){
-
+function updateTotalField(fieldID, InputValue){
+        // get prevoius total
+        const totalField = document.getElementById(fieldID);
+        const totalValueText = totalField.innerText;
+        const totalValue = parseFloat(totalValueText);
+    
+        // replace previous total with new total
+        const newTotal = totalValue + InputValue; 
+        totalField.innerText = newTotal;
 }
 
 
 document.getElementById('deposit-btn').addEventListener('click', function(){
+    // get input value
     const depositInputValue = getInputValue('deposit-input');
 
-
-
+    // update total deposit field
+    updateTotalField('deposit-total', depositInputValue);
 
 
     // get previous balance
@@ -40,16 +48,9 @@ document.getElementById('deposit-btn').addEventListener('click', function(){
 // handle withdraw button
 document.getElementById('withdraw-btn').addEventListener('click', function(){
     const withdrawInputValue = getInputValue('withdraw-input');
+    
 
-
-    // get prevoius deposit total
-    const totalWithdrawField = document.getElementById('withdraw-total');
-    const totalWithdrawValueText = totalWithdrawField.innerText;
-    const totalWithdrawValue = parseFloat(totalWithdrawValueText);
-
-    // replace previous deposit total with deposit new total
-    const newTotalWithdraw = totalWithdrawValue + withdrawInputValue; 
-    totalWithdrawField.innerText = newTotalWithdraw;    
+    updateTotalField('withdraw-total', withdrawInputValue);
 
 
 
