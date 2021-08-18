@@ -21,6 +21,26 @@ function updateTotalField(fieldID, InputValue){
 }
 
 
+function updateBalance(balanceId, InputValue, isAdd) {
+    // get previous balance
+    const previousBalanceField = document.getElementById(balanceId);
+    const previousBalanceText = previousBalanceField.innerText;
+    const previousBalanceValue = parseFloat(previousBalanceText);
+
+
+    //update balance
+    if (isAdd == true){
+        const newTotalBalance = previousBalanceValue + InputValue;
+        previousBalanceField.innerText = newTotalBalance;
+    }
+    else {
+        const newTotalBalance = previousBalanceValue - InputValue;
+        previousBalanceField.innerText = newTotalBalance;
+    }
+
+}
+
+
 document.getElementById('deposit-btn').addEventListener('click', function(){
     // get input value
     const depositInputValue = getInputValue('deposit-input');
@@ -28,40 +48,23 @@ document.getElementById('deposit-btn').addEventListener('click', function(){
     // update total deposit field
     updateTotalField('deposit-total', depositInputValue);
 
-
-    // get previous balance
-    const previousBalanceField = document.getElementById('previos-balance');
-    const previousBalanceText = previousBalanceField.innerText;
-    const previousBalanceValue = parseFloat(previousBalanceText);
-
-
-    //update balance
-    const newTotalBalance = previousBalanceValue + depositInputValue;
-    previousBalanceField.innerText = newTotalBalance;
-
+    // update balance
+    updateBalance('previos-balance', depositInputValue, true);
 })
-
-
 
 
 
 // handle withdraw button
 document.getElementById('withdraw-btn').addEventListener('click', function(){
+    // get input value
     const withdrawInputValue = getInputValue('withdraw-input');
     
-
+    // update total withdraw field
     updateTotalField('withdraw-total', withdrawInputValue);
 
-
-
-    // get previous balance
-    const previousBalanceField = document.getElementById('previos-balance');
-    const previousBalanceText = previousBalanceField.innerText;
-    const previousBalanceValue = parseFloat(previousBalanceText);
-
-
-    //update balance
-    const newTotalBalance = previousBalanceValue - withdrawInputValue;
-    previousBalanceField.innerText = newTotalBalance;   
-    
+    // update balance
+    updateBalance('previos-balance', withdrawInputValue, false);
 })
+
+
+// we could have just take the negative value of withdrawInputValue
