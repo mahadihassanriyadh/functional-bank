@@ -20,13 +20,18 @@ function updateTotalField(fieldID, InputValue){
         totalField.innerText = newTotal;
 }
 
-
-function updateBalance(balanceId, InputValue, isAdd) {
-    // get previous balance
-    const previousBalanceField = document.getElementById(balanceId);
+function getCurrentBalance() {
+    const previousBalanceField = document.getElementById('previos-balance');
     const previousBalanceText = previousBalanceField.innerText;
     const previousBalanceValue = parseFloat(previousBalanceText);
+    return previousBalanceValue;
+}
 
+
+function updateBalance(InputValue, isAdd) {
+    // get previous balance
+    const previousBalanceField = document.getElementById('previos-balance');
+    const previousBalanceValue = getCurrentBalance();
 
     //update balance
     if (isAdd == true){
@@ -46,10 +51,15 @@ document.getElementById('deposit-btn').addEventListener('click', function(){
     const depositInputValue = getInputValue('deposit-input');
 
     // update total deposit field
-    updateTotalField('deposit-total', depositInputValue);
+    if (depositInputValue >= 0) {
+        updateTotalField('deposit-total', depositInputValue);
 
-    // update balance
-    updateBalance('previos-balance', depositInputValue, true);
+        // update balance
+        updateBalance(depositInputValue, true);
+    }
+    else{
+        alert('Please enter a positive number')
+    }
 })
 
 
@@ -58,12 +68,19 @@ document.getElementById('deposit-btn').addEventListener('click', function(){
 document.getElementById('withdraw-btn').addEventListener('click', function(){
     // get input value
     const withdrawInputValue = getInputValue('withdraw-input');
-    
-    // update total withdraw field
-    updateTotalField('withdraw-total', withdrawInputValue);
-
-    // update balance
-    updateBalance('previos-balance', withdrawInputValue, false);
+    const previousBalanceValue = getCurrentBalance();
+    if(withdrawInputValue >= 0 && withdrawInputValue <= previousBalanceValue){
+        // update total withdraw field
+        updateTotalField('withdraw-total', withdrawInputValue);
+        // update balance
+        updateBalance(withdrawInputValue, false);
+    }
+    else if(withdrawInputValue < 0){
+        alert('Please enter a positive number')
+    }
+    else{
+        alert('Insufficient Amount!!!')
+    }
 })
 
 
